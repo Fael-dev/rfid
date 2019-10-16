@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %} Adicionando Objeto {% endblock %}
+
+{% block content %}
+<div class="offset-1 col-10 list-div">
+	<form method="POST">
+		{% csrf_token %}
+		{{ form|crispy }}
+	 	<input type="submit" value="Relacionar Objeto" id="btn-form"/>
+	</form>
+</div>
+{% endblock %}

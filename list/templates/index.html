@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Lista de registros {% endblock %}
+
+{% block content %}
+  <h1 id="h1-center">Últimos Registros</h1>
+   <div class="col-12 filter-div">
+      <span>Ordenar por:</span>
+      <select name="filter" id="filter" class="form-control">  
+        <option value="">Escolha uma opção</option>
+        <option value="com">Códigos relacionados com objetos</option>
+        <option value="sem">Códigos não relacionados</option>
+      </select>
+    <form class="form-inline">
+        <input class="form-control mr-sm-2" type="search" placeholder="Pesquise por objetos" aria-label="Pesquisar" name="search" value="{{ request.GET.search }}">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
+    </form>
+  </div>
+
+  {% if messages %}
+    <ul class="messages">
+      {% for message in  messages %}
+        <li {% if message.tags %} class="alert alert-{{message.tags}}" {% endif %}>
+          {{message}}
+
+        </li>
+
+      {% endfor %}
+    </ul>
+  {% endif %}
+  <div class="alert alert-warning" role="alert">
+    *OBS: Ao apagar um objeto, o histórico do mesmo será apagado.
+  </div>
+  <center>
+  <ul class="cards">
+    <li>
+      <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+        <div class="card-header">Com Objetos</div>
+        <div class="card-body">
+          <h5 class="card-title">{{com}}</h5>
+        </div>
+      </div>
+    </li>
+    <li>
+     <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+      <div class="card-header">Total</div>
+      <div class="card-body">
+        <h5 class="card-title">{{ total }}</h5>
+      </div>
+    </div>
+    </li>
+    <li>      
+    <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
+      <div class="card-header">Sem Objetos</div>
+      <div class="card-body">
+        <h5 class="card-title">{{ sem }}</h5>
+      </div>
+    </div>
+    </li>
+  </ul>
+  </center>
+    <table class="table">
+      <tr align="middle" id="titulos">
+        <th>Servidor</th> <th>Antena</th>
+        <th>Código</th> <th>Data & Hora</th> 
+        <th>Objeto</th><th>Deletar</th><th>Históricos</th>
+      </tr>
+
+          {% for obj in obj %}
+          {% if obj.objeto %}
+              <tr align="middle" class="hover">
+                <td> {{ obj.server }} </td> <td> {{ obj.antena }} </td>
+                <td>  {{ obj.code }}  </td> <td> {{ obj.date }}  </td><td>{{ obj.objeto }}</td>
+                <td><a href="delete/{{obj.id}}"><button class="btn-acao" title="Deletar Objeto"><img src="{% static 'images/excluir.png' %}" class="btn-img"></button></a> </td>
+                <td><a href="historico/{{obj.code}}"><button class="btn-hist" title="historico"> <img src="{%static 'images/hist.png'%}" class="btn-img"></button></a></td>
+              </tr>
+          {% else %}
+              <tr align="middle" bgcolor="#ffabab"  class="hover-so">
+                <td> {{ obj.server }} </td> <td> {{ obj.antena }} </td>
+                <td>  {{ obj.code }}  </td> <td> {{ obj.date }}  </td><td><a href="cadastro/{{ obj.id }}"><button class="btn-acao" title="Adicionar Objeto"><img src="{% static 'images/add.png' %}" class="btn-img"></button></a></td>
+                <td><a href="delete/{{obj.id}}"><button class="btn-acao" title="Deletar Objeto"><img src="{% static 'images/excluir.png' %}" class="btn-img" ></button></a> </td>
+                <td><a href="historico/{{obj.code}}"><button class="btn-hist" title="historico"> <img src="{%static 'images/hist.png'%}" class="btn-img"></button></a></td>
+              </tr>
+             
+          {% endif %}
+          {% endfor %}
+            </table>
+            <div class="pagination">
+              <span class="step-links">
+                {% if obj.has_previous %}
+                  <a href="?page={{ obj.previous_page_number }} "> <img src="{%static 'images/previous.png'%}"></a>
+                {% endif %}
+
+              {% if obj.paginator.num_pages %}
+              <span class="current">
+                  {{ obj.number }} de {{ obj.paginator.num_pages }}
+              </span>
+              {% endif %}
+
+                {% if obj.has_next %}
+                  <a href="?page={{ obj.next_page_number }} "><img src="{% static 'images/next.png'%}"></a>
+                {% endif %}
+              </span>
+            </div>
+     
+{% endblock %}

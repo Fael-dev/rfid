@@ -1,0 +1,170 @@
+/* ========== TABELA DA LISTA DOS CÓDIGOS  ======== */
+.table{
+	margin-top: 0px;
+}
+.table tr td{
+	vertical-align: middle;
+}
+#titulos{
+	background-color: #343a40;
+	color: white;
+}
+.btn-acao{
+	background-color: transparent;
+	border:none;
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	cursor: pointer;
+	vertical-align: middle;
+}
+.btn-hist{
+	background-color: transparent;
+	border:none;
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	cursor: pointer;
+	margin-bottom:10px;
+}
+.btn-img{
+	width: 30px;
+	height: 30px;
+}
+.hover:hover{
+	background-color: #ccc;
+	cursor: pointer;
+}
+.hover-so:hover{
+	background-color: #ff5252;
+	color: white;
+	cursor: pointer;
+}
+
+/* ========== MENU ============= */
+
+.nav{
+	background-color:  #343a40;
+	padding: 10px;
+}
+
+/* ========== RODAPÉ ============= */
+
+.footer{
+	position: relative;
+	background-color: #343a40;
+	color: white;
+	bottom:0px;
+}
+
+/* ============== FORMULÁRIO DE CADASTRO ============ */
+#btn-form{
+	background-color: white;
+	color: #0051ff;
+	border: 1px solid #0051ff;
+	border-radius: 5px;
+	cursor: pointer;
+
+}
+#btn-form:hover{
+	background-color: #0051ff;
+	color: white;
+	border: 1px solid white;
+	border-radius: 5px;
+	cursor: pointer;
+
+}
+/* ==================== FILTRO ======================= */
+.filter-div{
+	margin-top: 50px;
+	padding:0px;
+}
+#filter{
+	display: inline-block;
+	width: 400px;
+	margin-left: 10px;
+}
+/* ================= PAGINAÇÃO ======================== */
+
+.pagination{
+	margin-bottom: 20px;
+
+}
+.step-links{
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+}
+.step-links .current{
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+/* =================== BARRA DE PESQUISAR ======================*/
+.form-inline{
+	display: inline-block;
+	float:right;
+}
+input[type='search'].form-control{
+	width: 500px;
+}
+/* ============== PÁGINA DE HISTÓRICO ===================*/
+h1#h1-center{
+	text-align: center;
+}
+/*============== MESSAGENS ============*/
+
+ul.messages{
+	padding:0px;
+	margin-top: 50px;
+}
+ul.messages li{
+	list-style: none;
+}
+/*================ PÁGINA 404 ===================*/
+
+.card-title{
+	font-size: 50px;
+}
+.alert{
+	margin: 20px;
+}
+
+.card{
+	display: inline-block;
+	height: 150px;
+	width: 150px;
+}
+.card-title, .card-header{
+	text-align: center;
+}
+ul.cards{
+	list-style: none;
+	width: 100%;
+	margin-left:auto;
+	margin-rigth:auto;
+
+}
+ul.cards li{
+	display: inline-block;
+}
+
+/*============ Home Page =============*/
+
+@import "compass/css3";
+
+/* text recolor */
+h1, p, a {
+  color: #4DC9C9 !important;
+}
+
+/* button recolor */
+.nav-pills > li.active > a, .btn-primary {
+  background-color: #6C6C6C !important;
+  border-color: #6C6C6C !important;
+  border-radius: 25px; 
+}
+.jumbotron{
+  text-align: center;
+}
+
