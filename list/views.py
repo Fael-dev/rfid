@@ -6,12 +6,14 @@ from .models import Objeto, Historico
 from .forms import ObjForm
 from datetime import datetime
 from django.contrib import messages
+from .utils import render_to_pdf 
+from django.template.loader import get_template
+from django.http import HttpResponse
 
 '''
-	COM O LOGIN REQUIRED O CÓDIGO NÃO ESTÁ GUARDANDO OS DADOS RECEBIDOS DA ANTENA.
-
+	FILTRO DO RELATÓRIO DE PDF QUASE PRONTO. FALTANDO IMPLEMENTAÇÃO DOS CHECKBOXES.
+	
 '''
-
 def homepage(request):
 
 	template_name = 'homepage.html'
@@ -37,14 +39,7 @@ def homepage(request):
 		    	hist.objeto = obj1.objeto
 		    	hist.date = obj1.date
 		    	hist.save() 
-		    	# Adicionando o novo objeto ao histórico
-		    	hist1 = Historico()
-		    	hist1.server = fml.server
-		    	hist1.antena = fml.antena
-		    	hist1.code = fml.code
-		    	hist1.objeto = obj1.objeto
-		    	hist1.date = datetime.now()
-		    	hist1.save() 
+		    	
 		    	# Atualizando o objeto anterior, pelo que acabou de receber
 		    	obj = Objeto.objects.get(code=fml.code)
 		    	obj.server = fml.server
@@ -52,7 +47,8 @@ def homepage(request):
 		    	obj.code = fml.code
 		    	obj.date = datetime.now()
 		    	obj.save()
-		    	return redirect('/')
+		    	return redirect('/')			
+
 		    # Se o resultado for menor que 1 minuto
 		    else:
 		    	return redirect('/')
@@ -69,6 +65,7 @@ def homepage(request):
 		form = ObjForm()
 
 	return render(request, template_name)
+	
 
 @login_required
 def listar(request):
@@ -131,5 +128,37 @@ def historico(request, code):
 	if not hist:
 		return render(request, '404.html')
 	# hist = get_list_or_404(Historico, code=code)
+
 	template_name = 'historico.html'
-	return render(request, template_name, {'hist':hist})
+	return render(request, template_name, {'hist':hist, 'code':code})
+
+'''
+@login_required
+def gerar_pdf(request, code ,*args, **kwargs):
+	data_emissao = datetime.now()
+	user = request.user
+	hist = Historico.objects.filter(code=code)
+	data = {'hist': hist, 'user':user, 'data_emissao':data_emissao}
+	pdf = render_to_pdf('relatorio.html', data)
+	return HttpResponse(pdf, content_type='application/pdf')
+'''
+
+@login_required
+def gerar_pdf(request,*args, **kwargs):
+	
+	data_emissao = datetime.now()
+	user = request.user
+	filtro_select = request.POST.get('selectcode')
+	option = request.POST.get('selectcampos')
+
+	if filtro_select == 'todos':
+		codigo = filtro_select
+		hist = Historico.objects.all()
+	else:
+		codigo = filtro_select
+		hist = Historico.objects.filter(code=filtro_select)
+			
+
+	data = {'hist': hist, 'user':user, 'data_emissao':data_emissao, 'codigo':codigo, 'opt':option}
+	pdf = render_to_pdf('relatorio.html', data)
+	return HttpResponse(pdf, content_type='application/pdf')

@@ -3,11 +3,11 @@ import random
 
 
 antena = random.randint(1,5)
-code = random.randint(1,50)
+code = random.randint(1,2)
 
 def sendData(antena_id, code):
 
-	url = 'http://172.16.8.107:8000/'
+	url = 'http://127.0.0.1:8000/'
 	result = requests.Session()
 	result.get(url)
 
@@ -19,7 +19,7 @@ def sendData(antena_id, code):
 
 	dados = {
 	 'csrfmiddlewaretoken':csrftoken,
-	 'server': '172.16.8.107',
+	 'server': '127.0.0.1',
 	 'antena': str(antena_id), 
 	 'code': str(code),
 	}
@@ -34,4 +34,4 @@ def sendData(antena_id, code):
 		print(response.status_code)
 
 
-sendData(antena, code)
+sendData(antena, "1")

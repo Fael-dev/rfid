@@ -28,37 +28,95 @@
       {% endfor %}
     </ul>
   {% endif %}
-  <div class="alert alert-warning" role="alert">
+ <!--<div class="alert alert-warning" role="alert">
     *OBS: Ao apagar um objeto, o histórico do mesmo será apagado.
   </div>
+--> 
   <center>
-  <ul class="cards">
-    <li>
-      <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
-        <div class="card-header">Com Objetos</div>
-        <div class="card-body">
-          <h5 class="card-title">{{com}}</h5>
+      <!-- FILTROS DO RELATÓRIO -->
+  <form method="POST" action="pdf/">
+    {% csrf_token %}
+      <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title">Relatório do Histórico</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              <div class="modal-body">
+                <!--
+                  <div class="card" style="width: 100%;">
+                      <div class="card-body">
+                        <h5 class="card-title">Filtrar por:</h5>
+                        <span class="badge badge-danger"> <input name="ckb1" type="checkbox" value="sem"> Códigos sem Objeto</span>
+                        <span class="badge badge-success"> <input name="ckb1" type="checkbox" value="com"> Códigos com Objeto</span>
+                      </div>
+                  </div>
+                -->
+                    <div class="card" style="width: 100%;">
+                        <div class="card-body">
+                          <h5 class="card-title"><b> Gerar Relatório do Código: </b></h5>
+                          <select name="selectcode" id="selectcode" class="form-control">
+                            <option value="todos">Todos os códigos</option>
+                            {% for obj in obj %}
+                              <option value="{{ obj.code }}">Apenas:{{ obj.code }}</option>
+                            {% endfor %}
+                          </select>
+                          <span>*Ao selecionar todos os códigos, o campo CÓDIGO será inserido.</span>
+                        </div>
+                    </div>
+                    <div class="card" style="width: 100%;">
+                        <div class="card-body">
+                          <h5 class="card-title"><b> Campos que vai ter:</b></h5>
+                          <select name="selectcampos" id="selectcampos" class="form-control">
+                              <option value="todos">Todos os campos</option>
+                              <option value="1"> Servidor - Objeto - Data e Hora </option>
+                              <option value="2"> Servidor - Antena - Objeto </option>
+                              <option value="3"> Servidor - Data e Hora - Antena </option>
+                              <option value="4"> Data e Hora - Antena - Objeto </option>
+                          </select>
+                          <span> *Código(Obrigatório)</span>
+                        </div>
+                    </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="badge badge-light" data-dismiss="modal"><img src="{% static 'images/excluir.png' %}" class="img-pdf">Fechar</button>
+                  <button type="submit" class="badge badge-light"> <img src="{% static 'images/print.png' %}" class="img-pdf">Gerar PDF</button>
+              </div>
+          </div>
         </div>
       </div>
-    </li>
-    <li>
-     <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
-      <div class="card-header">Total</div>
-      <div class="card-body">
-        <h5 class="card-title">{{ total }}</h5>
-      </div>
-    </div>
-    </li>
-    <li>      
-    <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
-      <div class="card-header">Sem Objetos</div>
-      <div class="card-body">
-        <h5 class="card-title">{{ sem }}</h5>
-      </div>
-    </div>
-    </li>
-  </ul>
+    </form>
+  
+    <button type="button" class="badge badge-danger" data-toggle="modal" data-target=".bd-example-modal-lg"><img src="{% static 'images/pdf.png' %}" class="img-pdf">Relatório</button>
+    <span class="badge badge-dark"> <b> Com Objetos: {{ com }}</b></span>
+    <span class="badge badge-dark"> <b>Total de Objetos: {{ total }}</b></span>
+    <span class="badge badge-dark"> <b> Sem Objetos: {{ sem }}</b></span>
+    
   </center>
+<!--
+  <div class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Excluir Objeto</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      Ao excluir o objeto, o historico do mesmo será apagado.
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+                      <button type="button" class="btn btn-primary"><a href="delete/{{obj.id}}">Excluir</a></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+-->
     <table class="table">
       <tr align="middle" id="titulos">
         <th>Servidor</th> <th>Antena</th>
@@ -74,11 +132,12 @@
                 <td><a href="delete/{{obj.id}}"><button class="btn-acao" title="Deletar Objeto"><img src="{% static 'images/excluir.png' %}" class="btn-img"></button></a> </td>
                 <td><a href="historico/{{obj.code}}"><button class="btn-hist" title="historico"> <img src="{%static 'images/hist.png'%}" class="btn-img"></button></a></td>
               </tr>
+        
           {% else %}
               <tr align="middle" bgcolor="#ffabab"  class="hover-so">
                 <td> {{ obj.server }} </td> <td> {{ obj.antena }} </td>
                 <td>  {{ obj.code }}  </td> <td> {{ obj.date }}  </td><td><a href="cadastro/{{ obj.id }}"><button class="btn-acao" title="Adicionar Objeto"><img src="{% static 'images/add.png' %}" class="btn-img"></button></a></td>
-                <td><a href="delete/{{obj.id}}"><button class="btn-acao" title="Deletar Objeto"><img src="{% static 'images/excluir.png' %}" class="btn-img" ></button></a> </td>
+                <td><a href="delete/{{obj.id}}"><button class="btn-acao" title="Deletar Objeto" data-toggle="modal" data-target="#modalExemplo"><img src="{% static 'images/excluir.png' %}" class="btn-img" ></button></a> </td>
                 <td><a href="historico/{{obj.code}}"><button class="btn-hist" title="historico"> <img src="{%static 'images/hist.png'%}" class="btn-img"></button></a></td>
               </tr>
              

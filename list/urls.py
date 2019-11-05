@@ -7,4 +7,5 @@ urlpatterns = [
 	path('lista/delete/<int:id>', views.deleteObj, name='delete-teste'),
 	path('lista/cadastro/<int:id>', views.add, name='add-objeto'),
 	path('lista/historico/<str:code>', views.historico, name='historico'),
+	path('lista/pdf/', views.gerar_pdf, name='pdf'),
 ]
