@@ -46,15 +46,6 @@
                   </button>
                 </div>
               <div class="modal-body">
-                <!--
-                  <div class="card" style="width: 100%;">
-                      <div class="card-body">
-                        <h5 class="card-title">Filtrar por:</h5>
-                        <span class="badge badge-danger"> <input name="ckb1" type="checkbox" value="sem"> Códigos sem Objeto</span>
-                        <span class="badge badge-success"> <input name="ckb1" type="checkbox" value="com"> Códigos com Objeto</span>
-                      </div>
-                  </div>
-                -->
                     <div class="card" style="width: 100%;">
                         <div class="card-body">
                           <h5 class="card-title"><b> Gerar Relatório do Código: </b></h5>
@@ -94,29 +85,8 @@
     <span class="badge badge-dark"> <b> Com Objetos: {{ com }}</b></span>
     <span class="badge badge-dark"> <b>Total de Objetos: {{ total }}</b></span>
     <span class="badge badge-dark"> <b> Sem Objetos: {{ sem }}</b></span>
-    
+
   </center>
-<!--
-  <div class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Excluir Objeto</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      Ao excluir o objeto, o historico do mesmo será apagado.
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
-                      <button type="button" class="btn btn-primary"><a href="delete/{{obj.id}}">Excluir</a></button>
-                    </div>
-                  </div>
-                </div>
-              </div>
--->
     <table class="table">
       <tr align="middle" id="titulos">
         <th>Servidor</th> <th>Antena</th>
@@ -125,11 +95,32 @@
       </tr>
 
           {% for obj in obj %}
+          <!-- GAMBIARRA QUE DEU CERTO, NÃO LIGUE -->
+          <div class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Excluir Objeto</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Ao excluir o objeto, o historico do mesmo será apagado.
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="badge badge-dark" data-dismiss="modal">Voltar</button>
+                  <button type="button" class="badge badge-light"><a href="delete/{{obj.id}}">Excluir</a></button>
+                </div>
+              </div>
+            </div>
+        </div>
+        <!-- FIM DA GAMBIARRA-->
           {% if obj.objeto %}
               <tr align="middle" class="hover">
                 <td> {{ obj.server }} </td> <td> {{ obj.antena }} </td>
                 <td>  {{ obj.code }}  </td> <td> {{ obj.date }}  </td><td>{{ obj.objeto }}</td>
-                <td><a href="delete/{{obj.id}}"><button class="btn-acao" title="Deletar Objeto"><img src="{% static 'images/excluir.png' %}" class="btn-img"></button></a> </td>
+                <td> <button type="submit" class="btn-acao" title="Deletar Objeto" data-toggle="modal" data-target="#modalExemplo"><img src="{% static 'images/excluir.png' %}" class="btn-img"></button> </td>
                 <td><a href="historico/{{obj.code}}"><button class="btn-hist" title="historico"> <img src="{%static 'images/hist.png'%}" class="btn-img"></button></a></td>
               </tr>
         
@@ -137,7 +128,7 @@
               <tr align="middle" bgcolor="#ffabab"  class="hover-so">
                 <td> {{ obj.server }} </td> <td> {{ obj.antena }} </td>
                 <td>  {{ obj.code }}  </td> <td> {{ obj.date }}  </td><td><a href="cadastro/{{ obj.id }}"><button class="btn-acao" title="Adicionar Objeto"><img src="{% static 'images/add.png' %}" class="btn-img"></button></a></td>
-                <td><a href="delete/{{obj.id}}"><button class="btn-acao" title="Deletar Objeto" data-toggle="modal" data-target="#modalExemplo"><img src="{% static 'images/excluir.png' %}" class="btn-img" ></button></a> </td>
+                <td><button type="submit" class="btn-acao" title="Deletar Objeto" data-toggle="modal" data-target="#modalExemplo"><img src="{% static 'images/excluir.png' %}" class="btn-img" ></button> </td>
                 <td><a href="historico/{{obj.code}}"><button class="btn-hist" title="historico"> <img src="{%static 'images/hist.png'%}" class="btn-img"></button></a></td>
               </tr>
              

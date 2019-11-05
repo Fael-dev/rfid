@@ -3,7 +3,7 @@ import random
 
 
 antena = random.randint(1,5)
-code = random.randint(1,2)
+code = random.randint(1,5)
 
 def sendData(antena_id, code):
 
@@ -34,4 +34,4 @@ def sendData(antena_id, code):
 		print(response.status_code)
 
 
-sendData(antena, "1")
+sendData(antena, "3")

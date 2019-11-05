@@ -11,7 +11,7 @@ from django.template.loader import get_template
 from django.http import HttpResponse
 
 '''
-	FILTRO DO RELATÓRIO DE PDF QUASE PRONTO. FALTANDO IMPLEMENTAÇÃO DOS CHECKBOXES.
+	'PROJETO FINALIZADO'
 	
 '''
 def homepage(request):
@@ -39,7 +39,6 @@ def homepage(request):
 		    	hist.objeto = obj1.objeto
 		    	hist.date = obj1.date
 		    	hist.save() 
-		    	
 		    	# Atualizando o objeto anterior, pelo que acabou de receber
 		    	obj = Objeto.objects.get(code=fml.code)
 		    	obj.server = fml.server
@@ -47,8 +46,7 @@ def homepage(request):
 		    	obj.code = fml.code
 		    	obj.date = datetime.now()
 		    	obj.save()
-		    	return redirect('/')			
-
+		    	return redirect('/') 
 		    # Se o resultado for menor que 1 minuto
 		    else:
 		    	return redirect('/')
@@ -104,7 +102,6 @@ def deleteObj(request, id):
 		hist.delete()
 	obj.delete()
 	messages.info(request, 'Objeto deletado com sucesso')
-
 	return redirect('/lista')
 
 @login_required
@@ -153,11 +150,10 @@ def gerar_pdf(request,*args, **kwargs):
 
 	if filtro_select == 'todos':
 		codigo = filtro_select
-		hist = Historico.objects.all()
+		hist = Historico.objects.all().order_by('code')
 	else:
 		codigo = filtro_select
-		hist = Historico.objects.filter(code=filtro_select)
-			
+		hist = Historico.objects.filter(code=filtro_select).order_by('code')
 
 	data = {'hist': hist, 'user':user, 'data_emissao':data_emissao, 'codigo':codigo, 'opt':option}
 	pdf = render_to_pdf('relatorio.html', data)
