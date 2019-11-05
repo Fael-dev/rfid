@@ -55,6 +55,11 @@
                 width: 100%;
                 background-color:lavenderblush;
             }
+            .sem{
+                color:brown;
+                text-decoration: underline;
+                text-decoration-color: brown;
+            }
         </style>
     
 </head>
@@ -73,7 +78,7 @@
                     
                         <div class="table-cabecalho">
                             <br>
-                            Usuario: <b>{{user.username}}</b><br><br>
+                            Responsavel: <b>{{user.username}}</b><br><br>
                                
                             Gerado em: <b>{{ data_emissao }} </b>
                         </div>
@@ -89,7 +94,11 @@
                                     </tr>
                                 {% for hist in hist %}
                                     <tr>
-                                        <td>{{ hist.server }}</td> <td>{{ hist.code }}</td><td>{{ hist.objeto }}</td><td>{{ hist.date }}</td>
+                                        <td>{{ hist.server }}</td> <td>{{ hist.code }}</td>
+                                        {% if hist.objeto %}
+                                            <td>{{ hist.objeto }}</td>
+                                        {% else %} <td><b class="sem">Sem Objeto</b></td> {% endif %}
+                                        <td>{{ hist.date }}</td>
                                     </tr> 
                                 {% endfor %}
                             </table>
@@ -100,7 +109,10 @@
                                     </tr>
                                 {% for hist in hist %}
                                     <tr>
-                                        <td>{{ hist.server }}</td> <td>{{ hist.code }}</td> <td>{{ hist.antena }}</td><td>{{ hist.objeto }}</td>
+                                        <td>{{ hist.server }}</td> <td>{{ hist.code }}</td> <td>{{ hist.antena }}</td>
+                                        {% if hist.objeto %}
+                                            <td>{{ hist.objeto }}</td>
+                                        {% else %} <td><b class="sem">Sem Objeto</b></td> {% endif %}
                                     </tr> 
                                 {% endfor %}
                             </table>
@@ -122,7 +134,11 @@
                                     </tr>
                                 {% for hist in hist %}
                                     <tr>
-                                        <td>{{ hist.code }}</td> <td>{{ hist.antena }}</td><td>{{ hist.objeto }}</td><td>{{ hist.date }}</td>
+                                        <td>{{ hist.code }}</td> <td>{{ hist.antena }}</td>
+                                        {% if hist.objeto %}
+                                            <td>{{ hist.objeto }}</td>
+                                        {% else %} <td><b class="sem">Sem Objeto</b></td> {% endif %}
+                                        <td>{{ hist.date }}</td>
                                     </tr> 
                                 {% endfor %}
                             </table>
@@ -133,7 +149,11 @@
                                     </tr>
                                 {% for hist in hist %}
                                     <tr>
-                                        <td>{{ hist.server }}</td>  <td>{{ hist.code }}</td><td>{{ hist.antena }}</td><td>{{ hist.objeto }}</td><td>{{ hist.date }}</td>
+                                        <td>{{ hist.server }}</td>  <td>{{ hist.code }}</td><td>{{ hist.antena }}</td>
+                                        {% if hist.objeto %}
+                                            <td>{{ hist.objeto }}</td>
+                                        {% else %} <td><b class="sem">Sem Objeto</b></td> {% endif %}
+                                        <td>{{ hist.date }}</td>
                                     </tr> 
                                 {% endfor %}
                             </table>
@@ -148,7 +168,11 @@
                                     </tr>
                                 {% for hist in hist %}
                                     <tr>
-                                        <td>{{ hist.server }}</td> <td>{{ hist.objeto }}</td><td>{{ hist.date }}</td>
+                                        <td>{{ hist.server }}</td>
+                                        {% if hist.objeto %}
+                                            <td>{{ hist.objeto }}</td>
+                                        {% else %} <td><b class="sem">Sem Objeto</b></td> {% endif %}
+                                        <td>{{ hist.date }}</td>
                                     </tr> 
                                 {% endfor %}
                             </table>
@@ -159,7 +183,10 @@
                                     </tr>
                                 {% for hist in hist %}
                                     <tr>
-                                        <td>{{ hist.server }}</td> <td>{{ hist.antena }}</td><td>{{ hist.objeto }}</td>
+                                        <td>{{ hist.server }}</td> <td>{{ hist.antena }}</td>
+                                        {% if hist.objeto %}
+                                            <td>{{ hist.objeto }}</td>
+                                        {% else %} <td><b class="sem">Sem Objeto</b></td> {% endif %}
                                     </tr> 
                                 {% endfor %}
                             </table>
@@ -181,7 +208,11 @@
                                     </tr>
                                 {% for hist in hist %}
                                     <tr>
-                                         <td>{{ hist.antena }}</td><td>{{ hist.objeto }}</td><td>{{ hist.date }}</td>
+                                         <td>{{ hist.antena }}</td>
+                                         {% if hist.objeto %}
+                                            <td>{{ hist.objeto }}</td>
+                                        {% else %} <td><b class="sem">Sem Objeto</b></td> {% endif %}
+                                         <td>{{ hist.date }}</td>
                                     </tr> 
                                 {% endfor %}
                             </table>
@@ -192,7 +223,11 @@
                                     </tr>
                                 {% for hist in hist %}
                                     <tr>
-                                        <td>{{ hist.server }}</td><td>{{ hist.antena }}</td><td>{{ hist.objeto }}</td><td>{{ hist.date }}</td>
+                                        <td>{{ hist.server }}</td><td>{{ hist.antena }}</td>
+                                        {% if hist.objeto %}
+                                            <td>{{ hist.objeto }}</td>
+                                        {% else %} <td><b class="sem">Sem Objeto</b></td> {% endif %}
+                                        <td>{{ hist.date }}</td>
                                     </tr> 
                                 {% endfor %}
                             </table>
@@ -204,6 +239,7 @@
                     
                 </div>
             </div>
+            
 </body>
 </html>
     

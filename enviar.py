@@ -1,9 +1,11 @@
 import requests
 import random
-
+import socket
 
 antena = random.randint(1,5)
 code = random.randint(1,5)
+host_name = socket.gethostname()
+host_ip = socket.gethostbyname(host_name)
 
 def sendData(antena_id, code):
 
@@ -19,7 +21,7 @@ def sendData(antena_id, code):
 
 	dados = {
 	 'csrfmiddlewaretoken':csrftoken,
-	 'server': '127.0.0.1',
+	 'server': host_ip,
 	 'antena': str(antena_id), 
 	 'code': str(code),
 	}
@@ -32,6 +34,7 @@ def sendData(antena_id, code):
 	else:
 		print("Falha ao enviar!")
 		print(response.status_code)
-
+	print(host_ip)
+	print(host_name)
 
 sendData(antena, "3")

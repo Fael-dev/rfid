@@ -47,6 +47,7 @@ def homepage(request):
 		    	obj.date = datetime.now()
 		    	obj.save()
 		    	return redirect('/') 
+
 		    # Se o resultado for menor que 1 minuto
 		    else:
 		    	return redirect('/')

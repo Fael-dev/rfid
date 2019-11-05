@@ -151,16 +151,12 @@ h1, p, a {
 
 /*================ PDF ===============*/
 
-.btn-pdf{
-	background-color: transparent;
-	border: 1px solid #4DC9C9;
-	border-radius:10px;
-	margin-bottom: 10px;
-}
 .img-pdf{
 	width: 20px;
 	height: 20px;
+	vertical-align: middle;
 }
+
 /* ================== INFORMATIVOS SOBRE OS OBJ =============== */
 
 .badge{
