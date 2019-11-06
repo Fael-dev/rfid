@@ -77,10 +77,15 @@
                         {% endif %}
                     
                         <div class="table-cabecalho">
-                            <br>
-                            Responsavel: <b>{{user.username}}</b><br><br>
-                               
-                            Gerado em: <b>{{ data_emissao }} </b>
+                            
+                            Responsavel: <b>{{user.username}}</b> <br><br>
+                            Gerado em: <b>{{ data_emissao }} </b><br> <br> 
+                            {% if codigo == 'todos' %}
+                                Codigos sem Objeto: <b>{{ sem }}</b><br>
+                                Codigos com Objeto: <b>{{ com }}</b><br>
+                                Total de Registros: <b>{{ total }}</b><br>
+                            {% else %}
+                            {% endif %}
                         </div>
                         <hr>
             
@@ -235,11 +240,10 @@
                     {% endif %}
                 </div>
                 <div class="footer">
-                    *Se a coluna OBJETO estiver vazia e porque nao tem objeto relacionado.
                     
                 </div>
             </div>
-            
+
 </body>
 </html>
     

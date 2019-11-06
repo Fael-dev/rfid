@@ -3,7 +3,7 @@ import random
 import socket
 
 antena = random.randint(1,5)
-code = random.randint(1,5)
+code = random.randint(1,10)
 host_name = socket.gethostname()
 host_ip = socket.gethostbyname(host_name)
 
@@ -37,4 +37,4 @@ def sendData(antena_id, code):
 	print(host_ip)
 	print(host_name)
 
-sendData(antena, "3")
+sendData(antena, code)

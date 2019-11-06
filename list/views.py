@@ -10,10 +10,8 @@ from .utils import render_to_pdf
 from django.template.loader import get_template
 from django.http import HttpResponse
 
-'''
-	'PROJETO FINALIZADO'
-	
-'''
+
+
 def homepage(request):
 
 	template_name = 'homepage.html'
@@ -28,7 +26,8 @@ def homepage(request):
 		    timestamp = datetime.timestamp(obj1.date)
 		    timesnow = datetime.timestamp(datetime.now())
 		    result = (timesnow - timestamp)
-		    print('Resultado: ', result)
+		    print('Resultado: {} do Código: {} '.format(result, obj1.code))
+			
 		    # Se o resultado desse subtração for maior que 60(1 minuto) ele pode cadastrar
 		    if result > 60:
 		    	# Adicionando o atual objeto ao Historico antes de atualizá-lo
@@ -73,7 +72,7 @@ def listar(request):
 	sem = Objeto.objects.filter(objeto='').count()
 	total = Objeto.objects.all().count()
 	com = total - sem
-	# If de Pesquisas e filtros
+
 	if search:
 		obj = Objeto.objects.filter(objeto__icontains=search) 
 
@@ -142,8 +141,12 @@ def gerar_pdf(request, code ,*args, **kwargs):
 '''
 
 @login_required
-def gerar_pdf(request,*args, **kwargs):
-	
+def gerar_pdf(request):
+
+	sem = Objeto.objects.filter(objeto='').count()
+	total = Objeto.objects.all().count()
+	com = total - sem
+
 	data_emissao = datetime.now()
 	user = request.user
 	filtro_select = request.POST.get('selectcode')
@@ -156,6 +159,7 @@ def gerar_pdf(request,*args, **kwargs):
 		codigo = filtro_select
 		hist = Historico.objects.filter(code=filtro_select).order_by('code')
 
-	data = {'hist': hist, 'user':user, 'data_emissao':data_emissao, 'codigo':codigo, 'opt':option}
+	data = {'hist': hist, 'user':user, 'data_emissao':data_emissao, 'codigo':codigo, 'opt':option, 'com':com, 'sem': sem, 'total':total}
 	pdf = render_to_pdf('relatorio.html', data)
+
 	return HttpResponse(pdf, content_type='application/pdf')
