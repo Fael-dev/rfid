@@ -44,12 +44,10 @@
                 height: 100px;
                 margin-top:25px;
                 background-color: lavenderblush;
+                padding:5px;
+                
             }
     
-            b{
-                text-decoration: underline;
-            }
-            
             .footer{
                 position: relative;
                 width: 100%;
@@ -60,6 +58,14 @@
                 text-decoration: underline;
                 text-decoration-color: brown;
             }
+            .infos{
+                width: 300px;
+                margin-right: auto;
+                margin-left: auto;
+                padding:0px;
+                text-align: center;
+            }
+            
         </style>
     
 </head>
@@ -77,13 +83,18 @@
                         {% endif %}
                     
                         <div class="table-cabecalho">
-                            
+
                             Responsavel: <b>{{user.username}}</b> <br><br>
                             Gerado em: <b>{{ data_emissao }} </b><br> <br> 
                             {% if codigo == 'todos' %}
-                                Codigos sem Objeto: <b>{{ sem }}</b><br>
-                                Codigos com Objeto: <b>{{ com }}</b><br>
-                                Total de Registros: <b>{{ total }}</b><br>
+                            <table class="infos">
+                                <tr>
+                                    <td>Codigos sem Objeto: <b>{{ sem }}</b></td>
+                                    <td>Codigos com Objeto: <b>{{ com }}</b></td>
+                                    <td>Total de Registros: <b>{{ total }}</b></td>
+                                </tr>
+                            </table>
+                               
                             {% else %}
                             {% endif %}
                         </div>

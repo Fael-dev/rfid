@@ -22,5 +22,5 @@ urlpatterns = [
     path('', include('list.urls')),
     path('accounts/', include('accounts.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('favicon.ico', RedirectView.as_view(url='/static/images/favicon.ico'))
+    path('favicon.ico', RedirectView.as_view(url='/static/images/logo.ico'))
 ]
