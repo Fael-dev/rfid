@@ -52,7 +52,11 @@
                           <select name="selectcode" id="selectcode" class="form-control">
                             <option value="todos">Todos os códigos</option>
                             {% for obj in obj %}
-                              <option value="{{ obj.code }}">Apenas:{{ obj.code }}</option>
+                              <option value="{{ obj.code }}">Apenas: {{ obj.code }}  -  
+                                {% if obj.objeto %}
+                                  {{ obj.objeto }}
+                                  {% else %} <b>Object not found</b>{% endif %}
+                                </option>
                             {% endfor %}
                           </select>
                           <span>*Ao selecionar todos os códigos, o campo CÓDIGO será inserido.</span>
@@ -73,17 +77,17 @@
                     </div>
               </div>
               <div class="modal-footer">
-                  <button type="button" class="badge badge-light" data-dismiss="modal"><img src="{% static 'images/excluir.png' %}" class="img-pdf">Fechar</button>
-                  <button type="submit" class="badge badge-light"> <img src="{% static 'images/print.png' %}" class="img-pdf">Gerar PDF</button>
+                  <button type="button" class="badge badge-secundary" data-dismiss="modal"><img src="{% static 'images/excluir.png' %}" class="img-pdf">Fechar</button>
+                  <button type="submit" class="badge badge-info"> <img src="{% static 'images/print.png' %}" class="img-pdf">Gerar PDF</button>
               </div>
           </div>
         </div>
       </div>
     </form>
   
-    <button type="button" class="badge badge-danger" data-toggle="modal" data-target=".bd-example-modal-lg"><img src="{% static 'images/pdf.png' %}" class="img-pdf">Relatório</button>
+    <button type="button" class="badge badge-info" data-toggle="modal" data-target=".bd-example-modal-lg"><img src="{% static 'images/pdf.png' %}" class="img-pdf">Relatório</button>
     <span class="badge badge-dark"> <b> Com Objetos: {{ com }}</b></span>
-    <span class="badge badge-dark"> <b>Total de Objetos: {{ total }}</b></span>
+    <span class="badge badge-dark"> <b> Total de Objetos: {{ total }}</b></span>
     <span class="badge badge-dark"> <b> Sem Objetos: {{ sem }}</b></span>
 <!--
    <div class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -119,7 +123,7 @@
               <tr align="middle" class="hover">
                 <td> {{ obj.server }} </td> <td> {{ obj.antena }} </td>
                 <td>  {{ obj.code }}  </td> <td> {{ obj.date }}  </td><td>{{ obj.objeto }}</td>
-                <td> <a href="delete/{{ obj.id }}"> <button class="btn-acao" title="Deletar Objeto" ><img src="{% static 'images/excluir.png' %}" class="btn-img"></button> </a></td>
+                <td><a href="delete/{{ obj.id }}" onclick="return confirm('Deseja excluir esse Registro ?')"> <button class="btn-acao" title="Deletar Objeto" ><img src="{% static 'images/excluir.png' %}" class="btn-img"></button> </a></td>
                 <td><a href="historico/{{obj.code}}"><button class="btn-hist" title="historico"> <img src="{%static 'images/hist.png'%}" class="btn-img"></button></a></td>
               </tr>
         
@@ -127,7 +131,7 @@
               <tr align="middle" bgcolor="#ffabab"  class="hover-so">
                 <td> {{ obj.server }} </td> <td> {{ obj.antena }} </td>
                 <td>  {{ obj.code }}  </td> <td> {{ obj.date }}  </td><td><a href="cadastro/{{ obj.id }}"><button class="btn-acao" title="Adicionar Objeto"><img src="{% static 'images/add.png' %}" class="btn-img"></button></a></td>
-                <td><a href="delete/{{ obj.id }}"> <button class="btn-acao" title="Deletar Objeto" ><img src="{% static 'images/excluir.png' %}" class="btn-img" ></button></a> </td>
+                <td><a href="delete/{{ obj.id }}" onclick="return confirm('Deseja excluir esse Registro ?')"> <button class="btn-acao" title="Deletar Objeto" ><img src="{% static 'images/excluir.png' %}" class="btn-img" ></button></a> </td>
                 <td><a href="historico/{{obj.code}}"><button class="btn-hist" title="historico"> <img src="{%static 'images/hist.png'%}" class="btn-img"></button></a></td>
               </tr>
              

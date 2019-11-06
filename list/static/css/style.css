@@ -133,7 +133,10 @@ ul.messages li{
 
 /* text recolor */
 h1 {
-  color:salmon !important;
+  color:deepskyblue !important;
+}
+a.a{
+	color:deepskyblue;
 }
 /* button recolor */
 .jumbotron{

@@ -10,8 +10,12 @@ from .utils import render_to_pdf
 from django.template.loader import get_template
 from django.http import HttpResponse
 
+'''
+	PEQUENO GRANDE BUG - AO RECEBER O REGISTRO PELO FORMULÁRIO, 
+	O REGISTRO NÃO VAI DIRETAMENTE AO HISTÓRICO, APENAS QUANDO UM OUTRO
+	REGISTRO É ENVIADO COM O MESMO CÓDIGO.
 
-
+'''
 def homepage(request):
 
 	template_name = 'homepage.html'
@@ -101,7 +105,7 @@ def deleteObj(request, id):
 		hist = Historico.objects.filter(code=obj.code)
 		hist.delete()
 	obj.delete()
-	messages.info(request, 'Objeto deletado com sucesso')
+	messages.info(request, 'Registro '+obj.code+' deletado com sucesso')
 	return redirect('/lista')
 
 @login_required
