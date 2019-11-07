@@ -3,20 +3,21 @@ from django.http import Http404
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator 
 from .models import Objeto, Historico
-from .forms import ObjForm
+from .forms import ObjForm, HistForm
+import time
 from datetime import datetime
 from django.contrib import messages
 from .utils import render_to_pdf 
 from django.template.loader import get_template
 from django.http import HttpResponse
 
-'''
-	PEQUENO GRANDE BUG - AO RECEBER O REGISTRO PELO FORMULÁRIO, 
-	ELE NÃO VAI DIRETAMENTE AO HISTÓRICO, APENAS QUANDO UM OUTRO
-	REGISTRO É ENVIADO COM O MESMO CÓDIGO, COMO CONSEQUÊNCIA ELE NÃO
-	GERA O PDF DO ULTIMO REGISTRO.
 
 '''
+	FILTRO POR PERÍODO A FAZER, PEGANDO DATA EM FORMATO STRING E 
+	CONVERTENDO PARA DATETIME E FAZENDO O FILTRO, SEM ERROS, MAS...
+	NÃO RETORNA NADA.
+'''
+
 def homepage(request):
 
 	template_name = 'homepage.html'
@@ -37,11 +38,11 @@ def homepage(request):
 		    if result > 60:
 		    	# Adicionando o atual objeto ao Historico antes de atualizá-lo
 		    	hist = Historico()
-		    	hist.server = obj1.server
-		    	hist.antena = obj1.antena
-		    	hist.code = obj1.code
+		    	hist.server = fml.server
+		    	hist.antena = fml.antena
+		    	hist.code = fml.code
 		    	hist.objeto = obj1.objeto
-		    	hist.date = obj1.date
+		    	hist.date = fml.date
 		    	hist.save() 
 		    	# Atualizando o objeto anterior, pelo que acabou de receber
 		    	obj = Objeto.objects.get(code=fml.code)
@@ -58,6 +59,12 @@ def homepage(request):
 
 		# Se o objeto não existe, ele é cadastrado no ELSE
 		else:
+			hist = Historico()
+			hist.server = fml.server
+			hist.antena = fml.antena
+			hist.code = fml.code
+			hist.date = datetime.now()
+			hist.save()
 			fml.date = datetime.now()
 			fml.save()
 
@@ -77,6 +84,12 @@ def listar(request):
 	sem = Objeto.objects.filter(objeto='').count()
 	total = Objeto.objects.all().count()
 	com = total - sem
+	
+	filtro_select = request.GET.get('selectcode')
+	if filtro_select == 'todos':
+		hist = Historico.objects.all().order_by('-date')
+	else:
+		hist = Historico.objects.filter(code=filtro_select)
 
 	if search:
 		obj = Objeto.objects.filter(objeto__icontains=search) 
@@ -97,7 +110,7 @@ def listar(request):
 
 	template_name = 'index.html'
 
-	return render(request, template_name, {'obj':obj, 'sem': sem, 'com': com, 'total':total})
+	return render(request, template_name, {'obj':obj, 'sem': sem, 'com': com, 'total':total, 'hist':hist})
 
 @login_required
 def deleteObj(request, id):
@@ -106,7 +119,7 @@ def deleteObj(request, id):
 		hist = Historico.objects.filter(code=obj.code)
 		hist.delete()
 	obj.delete()
-	messages.info(request, 'Registro '+obj.code+' deletado com sucesso')
+	messages.info(request, 'Registro ('+obj.code+') deletado com sucesso')
 	return redirect('/lista')
 
 @login_required
@@ -147,23 +160,29 @@ def gerar_pdf(request, code ,*args, **kwargs):
 
 @login_required
 def gerar_pdf(request):
-
+	
 	sem = Objeto.objects.filter(objeto='').count()
 	total = Objeto.objects.all().count()
 	com = total - sem
-
 	data_emissao = datetime.now()
 	user = request.user
+
 	filtro_select = request.POST.get('selectcode')
 	option = request.POST.get('selectcampos')
+	periodo = request.POST.get('selectperiodo')
 
+	a = periodo.replace(",", "")
+	b = a.replace(".", "")
+	c = b.replace(" pm", "")
+	date = datetime.strptime(c, '%b %d %Y %I:%M')
+	
 	if filtro_select == 'todos':
 		codigo = filtro_select
 		hist = Historico.objects.all().order_by('code')
 	else:
 		codigo = filtro_select
 		hist = Historico.objects.filter(code=filtro_select).order_by('code')
-
+	
 	data = {'hist': hist, 'user':user, 'data_emissao':data_emissao, 'codigo':codigo, 'opt':option, 'com':com, 'sem': sem, 'total':total}
 	pdf = render_to_pdf('relatorio.html', data)
 

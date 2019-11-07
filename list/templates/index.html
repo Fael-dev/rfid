@@ -13,7 +13,7 @@
       </select>
     <form class="form-inline">
         <input class="form-control mr-sm-2" type="search" placeholder="Pesquise por objetos" aria-label="Pesquisar" name="search" value="{{ request.GET.search }}">
-        <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Pesquisar</button>
+        <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Pesquisar</button>
     </form>
   </div>
 
@@ -75,6 +75,18 @@
                           <span> *Código(Obrigatório)</span>
                         </div>
                     </div>
+                    <div class="card" style="width: 100%;">
+                      <div class="card-body">
+                        <h5 class="card-title"><b> Período:</b></h5>
+                        <select name="selectperiodo" id="selectperiodo" class="form-control">
+                            <option value="todos">Todos os períodos</option>
+                              {% for hist in hist %}
+                              <option value="{{ hist.date }}">{{ hist.date }} - {{ hist.code }}</option>
+                              {% endfor %}
+                        </select>
+                        
+                      </div>
+                  </div>
               </div>
               <div class="modal-footer">
                   <button type="button" class="badge badge-secundary" data-dismiss="modal"><img src="{% static 'images/excluir.png' %}" class="img-pdf">Fechar</button>
