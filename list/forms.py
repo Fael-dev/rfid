@@ -11,4 +11,4 @@ class HistForm(forms.ModelForm):
 	objeto = forms.CharField(max_length=100, required=False)
 	class Meta:
 		model = Historico
-		fields = ('server', 'antena', 'code', 'objeto')
+		fields = ('objeto',)

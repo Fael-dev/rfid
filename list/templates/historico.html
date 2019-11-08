@@ -1,8 +1,16 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %} Histórico {% endblock %}
 {% block content %} 
+
 <table class="table">
 	<h1 id="h1-center">Histórico</h1> 
+	<hr>
+	<span class="badge badge-dark">Total de registros: {{ total }}</span> 
+	<hr>
+	<div class="alert alert-dark" role="alert">
+			Lista em ordem decrescente de datas.
+	</div>
 	<!--<button class="btn-pdf"><a href="{{ code }}/pdf">Gerar PDF</a></button>-->
 	<tr>
 		<th>Servidor</th> <th>Antena</th> <th>Código</th> <th>Objeto</th>
@@ -21,4 +29,21 @@
 	{% endfor %}
 </table>
 
+<div class="pagination">
+	<span class="step-links">
+		{% if hist.has_previous %}
+			<a href="?page={{ hist.previous_page_number }} "> <img src="{%static 'images/previous.png'%}"></a>
+		{% endif %}
+
+		{% if hist.paginator.num_pages %}
+			<span class="current">
+				{{ hist.number }} de {{ hist.paginator.num_pages }}
+			</span>
+		{% endif %}
+
+		{% if hist.has_next %}
+			<a href="?page={{ hist.next_page_number }} "><img src="{% static 'images/next.png'%}"></a>
+		{% endif %}
+	</span>
+</div>
 {% endblock %}

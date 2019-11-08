@@ -8,4 +8,5 @@ urlpatterns = [
 	path('lista/cadastro/<int:id>', views.add, name='add-objeto'),
 	path('lista/historico/<str:code>', views.historico, name='historico'),
 	path('lista/pdf/', views.gerar_pdf, name='pdf'),
+	path('lista/desvincular/<int:id>/', views.desvincular, name='desvincular'),
 ]

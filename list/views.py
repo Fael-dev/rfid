@@ -18,6 +18,10 @@ from django.http import HttpResponse
 	NÃO RETORNA NADA.
 '''
 
+'''
+	Função HOMEPAGE recebe os dados enviados do servidore se já estivem cadastrados,
+	só pode registrar se tiver passado o tempo de 1 minuto, se não, ele é cadastrado.
+'''
 def homepage(request):
 
 	template_name = 'homepage.html'
@@ -121,15 +125,29 @@ def deleteObj(request, id):
 	obj.delete()
 	messages.info(request, 'Registro ('+obj.code+') deletado com sucesso')
 	return redirect('/lista')
+	
+@login_required
+def desvincular(request, id):
+	obj = Objeto.objects.filter(pk=id).first()
+	if request.method == 'POST':
+		obj.objeto = ''
+		obj.save()
+	else:
+		return redirect('/lista')
+	return redirect('/lista')
 
 @login_required
 def add(request, id):
 	objt = get_object_or_404(Objeto, pk=id) 
+	hist = Historico.objects.filter(code=objt.code).last()
+	formHist = HistForm(instance=hist)
 	form = ObjForm(instance=objt)
 	template_name = 'add.html'
 	if request.method == 'POST':
 		form = ObjForm(request.POST, instance=objt)
 		if form.is_valid():
+			hist.objeto = objt.objeto
+			hist.save()
 			objt.save()
 			return redirect('/lista')
 		else:
@@ -139,13 +157,19 @@ def add(request, id):
 
 @login_required
 def historico(request, code):
-	hist = list(Historico.objects.filter(code=code).order_by('-date'))
+	total = Historico.objects.filter(code=code).count()
+	his = list(Historico.objects.filter(code=code).order_by('-date'))
+	
+	paginator = Paginator(his, 10)
+	page = request.GET.get('page')
+	hist = paginator.get_page(page)
+	
 	if not hist:
 		return render(request, '404.html')
 	# hist = get_list_or_404(Historico, code=code)
 
 	template_name = 'historico.html'
-	return render(request, template_name, {'hist':hist, 'code':code})
+	return render(request, template_name, {'hist':hist, 'code':code, 'total':total })
 
 '''
 @login_required
@@ -170,19 +194,22 @@ def gerar_pdf(request):
 	filtro_select = request.POST.get('selectcode')
 	option = request.POST.get('selectcampos')
 	periodo = request.POST.get('selectperiodo')
-
+	print(periodo)
+	'''
 	a = periodo.replace(",", "")
 	b = a.replace(".", "")
 	c = b.replace(" pm", "")
 	date = datetime.strptime(c, '%b %d %Y %I:%M')
-	
+	'''
+
 	if filtro_select == 'todos':
 		codigo = filtro_select
-		hist = Historico.objects.all().order_by('code')
+		hist = Historico.objects.all().order_by('-code')
 	else:
 		codigo = filtro_select
-		hist = Historico.objects.filter(code=filtro_select).order_by('code')
-	
+		hist = Historico.objects.filter(code=filtro_select).order_by('-code')
+
+
 	data = {'hist': hist, 'user':user, 'data_emissao':data_emissao, 'codigo':codigo, 'opt':option, 'com':com, 'sem': sem, 'total':total}
 	pdf = render_to_pdf('relatorio.html', data)
 

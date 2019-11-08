@@ -75,6 +75,7 @@
                           <span> *Código(Obrigatório)</span>
                         </div>
                     </div>
+                   <!--
                     <div class="card" style="width: 100%;">
                       <div class="card-body">
                         <h5 class="card-title"><b> Período:</b></h5>
@@ -84,9 +85,9 @@
                               <option value="{{ hist.date }}">{{ hist.date }} - {{ hist.code }}</option>
                               {% endfor %}
                         </select>
-                        
-                      </div>
-                  </div>
+                    </div>
+                    </div>
+                   -->
               </div>
               <div class="modal-footer">
                   <button type="button" class="badge badge-secundary" data-dismiss="modal"><img src="{% static 'images/excluir.png' %}" class="img-pdf">Fechar</button>
@@ -134,7 +135,13 @@
           {% if obj.objeto %}
               <tr align="middle" class="hover">
                 <td> {{ obj.server }} </td> <td> {{ obj.antena }} </td>
-                <td>  {{ obj.code }}  </td> <td> {{ obj.date }}  </td><td>{{ obj.objeto }}</td>
+                <td>  {{ obj.code }}  </td> <td> {{ obj.date }}  </td>
+                <form action="desvincular/{{ obj.id }}/" method="POST">
+                  {% csrf_token %}
+                  <td> 
+                    <button class="desvincular" type="submit" title="Desvincular objeto" onclick="return confirm('Desvincular objeto do código ?')">{{ obj.objeto }}</button>
+                  </td>
+                </form>
                 <td><a href="delete/{{ obj.id }}" onclick="return confirm('Deseja excluir esse Registro ?')"> <button class="btn-acao" title="Deletar Objeto" ><img src="{% static 'images/excluir.png' %}" class="btn-img"></button> </a></td>
                 <td><a href="historico/{{obj.code}}"><button class="btn-hist" title="historico"> <img src="{%static 'images/hist.png'%}" class="btn-img"></button></a></td>
               </tr>

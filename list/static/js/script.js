@@ -8,11 +8,5 @@ $(filter).change(function(){
 	 	window.location.href = baseUrl + '?filter=' +filter;
 	 });
 
-$(filter2).change(function(){
-		var filter2 = $(this).val();
-		console.log(filter2);
-		window.location.href = baseUrl + '?selectcode=' +filter2;
-	});
-
 })
 

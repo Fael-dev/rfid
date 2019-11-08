@@ -5,6 +5,16 @@
 .table tr td{
 	vertical-align: middle;
 }
+.desvincular{
+	width: 100%;
+	height: 100%;	
+	background-color: white;
+}
+.desvincular:hover{
+	width: 100%;
+	height: 100%;	
+	text-decoration: underline;
+}
 #titulos{
 	background-color: #343a40;
 	color: white;
