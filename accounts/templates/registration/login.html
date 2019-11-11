@@ -5,6 +5,47 @@
 
 {% block content %}
 
+
+<form method="POST" action="/accounts/recover/">
+{% csrf_token %}
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+	  <div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">Recuperação de senha</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			  <div class="input-group mb-3">
+				<div class="input-group-prepend">
+				  <span class="input-group-text" id="basic-addon1">@</span>
+				</div>
+				<input type="email" name="email" class="form-control" placeholder="Email" aria-label="Usuário" aria-describedby="basic-addon1" required>
+			  </div>
+			  <div class="alert alert-info" role="alert">
+				  Digite o email da conta cadastrada que deseja recuperar a senha.
+			  </div>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+			<button type="submit" class="btn btn-primary">Enviar</button>
+		  </div>
+	  </div>
+	</div>
+  </div>
+</form>
+{% if messages %}
+    <ul class="messages">
+      {% for message in  messages %}
+        <li {% if message.tags %} class="alert alert-{{message.tags}}" {% endif %}>
+      {{message}}
+    	</li>
+{% endfor %}
+    </ul>
+{% endif %}
+
 <div class="row">
 	<div class="col-md-4 offset-md-4">
 		
@@ -18,8 +59,12 @@
 		 		<button type=submit class="btn btn-primary btn-block">Entrar </button>
 		 	</form>
 		 	<p class="change-form-p">
-		 		Já possui uma conta? <a href="/accounts/register">Click Aqui!</a>
-		 	</p>
+		 		Deseja criar uma conta ? <a href="/accounts/register">Click Aqui!</a>
+			</p>
+			<p class="change-form-p">
+				Esqueceu a senha ? <a href="" data-toggle="modal" data-target=".bd-example-modal-lg">Click Aqui!</a>
+		    </p>
+			 
 	</div>
 </div>
 

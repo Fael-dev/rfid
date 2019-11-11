@@ -127,3 +127,17 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL =  '/'
 
 LOGOUT_REDIRECT_URL = '/accounts/login'
+
+EMAIL_HOST = 'localhost'
+
+EMAIL_HOST_PASSWORD = ''
+
+EMAIL_HOST_USER = 'hlysa697i@brymstonne.org'
+
+EMAIL_PORT = 25
+
+EMAIL_USE_TLS = False
+
+EMAIL_USE_SSL = False
+
+

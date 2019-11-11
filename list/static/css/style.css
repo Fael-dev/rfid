@@ -153,6 +153,10 @@ a.a{
 .jumbotron{
   text-align: center;
 }
+.logo_air{
+	width: 220px;
+	height: 60px;
+}
 
 
 /*================ PDF ===============*/
