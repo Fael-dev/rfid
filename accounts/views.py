@@ -31,15 +31,19 @@ class SignUp(generic.CreateView):
 def recover(request):
     mail = request.POST.get('email')
     if request.method == 'POST':
-        user = User.objects.filter(email=mail)
+        user = User.objects.get(email=mail)
+        print(user.password)
         if user:
             #ENVIAR A SENHA PARA EMAIL E INFORMAR AO USUÁRIO
-            #send_mail('Subject', 'Senha a enviar', 'hlysa697i@brymstonne.org', ['44eff3cd68@emailcu.icu',])
-            messages.success(request, 'Senha enviada para seu email.')
+            send_mail('Recuperação de senha',' senha', 'faelleonan@gmail.com', ['wicite7944@ymail365.com',])
+            #newsenha = 'SeNhAaLeAtOrIa'
+            #user.password = newsenha
+            #user.save()
+            messages.success(request, 'Senha enviada para seu email cadastrado.')
             return redirect('/accounts/login')
         else:
             #INFORMAR QUE O EMAIL É INVÁLIDO
-            messages.info(request, 'Email inválido!')
+            messages.warning(request, 'Email inválido!')
             return redirect('/accounts/login')
     else:
         return redirect('/accounts/login')

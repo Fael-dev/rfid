@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'accounts',
 ]
 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -128,16 +129,13 @@ LOGIN_REDIRECT_URL =  '/'
 
 LOGOUT_REDIRECT_URL = '/accounts/login'
 
-EMAIL_HOST = 'localhost'
-
-EMAIL_HOST_PASSWORD = ''
-
-EMAIL_HOST_USER = 'hlysa697i@brymstonne.org'
-
-EMAIL_PORT = 25
-
-EMAIL_USE_TLS = False
-
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST_USER = 'lionzel381@gmail.com'
+EMAIL_HOST_PASSWORD = 'totternore381'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
 
 

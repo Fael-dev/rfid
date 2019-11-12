@@ -144,10 +144,13 @@ ul.messages li{
 
 /* text recolor */
 h1 {
-  color:deepskyblue !important;
+  color:#ff5252 !important;
 }
-a.a{
-	color:deepskyblue;
+a{
+	color:#ff5252;
+}
+a:hover{
+	color:dimgray;
 }
 /* button recolor */
 .jumbotron{
