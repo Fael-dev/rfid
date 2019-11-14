@@ -144,10 +144,10 @@ ul.messages li{
 
 /* text recolor */
 h1 {
-  color:#ff5252 !important;
+  color:crimson !important;
 }
 a{
-	color:#ff5252;
+	color:crimson;
 }
 a:hover{
 	color:dimgray;
@@ -157,7 +157,7 @@ a:hover{
   text-align: center;
 }
 .logo_air{
-	width: 220px;
+	width: 270px;
 	height: 60px;
 }
 

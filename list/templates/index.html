@@ -4,6 +4,7 @@
 
 {% block content %}
   <h1 id="h1-center">Últimos Registros</h1>
+  
    <div class="col-12 filter-div">
       <span>Ordenar por:</span>
       <select name="filter" id="filter" class="form-control">  
@@ -16,7 +17,9 @@
         <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Pesquisar</button>
     </form>
   </div>
+  
 
+  
   {% if messages %}
     <ul class="messages">
       {% for message in  messages %}

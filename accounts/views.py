@@ -6,11 +6,9 @@ from django.views import generic
 from .forms import CustomUserCreationForm
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
 from django.conf import settings
 import random
+
 
 
 def register(request):
@@ -39,13 +37,14 @@ def recover(request):
         user = User.objects.filter(email=mail)
         if user:
             us = User.objects.get(email=mail)
-            dados = '@#!$%**(?)aeiouabc0123456789'
+            dados = 'aeiou0123456789'
             new_senha = "".join(random.sample(dados, len(dados)))
             us.set_password(new_senha)
             us.save()
             #ENVIAR A SENHA PARA EMAIL E INFORMAR AO USUÁRIO 
-            send_mail('Recuperação de senha','senha', settings.EMAIL_HOST_USER, ['faelleonan@gmail.com',], fail_silently=False)
-            messages.success(request, 'Foi enviada uma nova senha para seu email cadastrado. Sua nova senha é: '+new_senha)
+            msg = 'Sua nova senha é: '+new_senha
+            send_mail('Opção',msg, settings.EMAIL_HOST_USER, ['kewipo5641@net3mail.com',], fail_silently=False)
+            messages.success(request, 'Foi enviada uma nova senha para seu email cadastrado.')
             return redirect('/accounts/login')
         else:
             #INFORMAR QUE O EMAIL É INVÁLIDO
@@ -54,23 +53,8 @@ def recover(request):
     else:
         return redirect('/accounts/login')
 
-'''
-            email = 'lionzel381@gmail.com'
-            password = 'totternore381'
-            send_to_email = 'faelleonan@gmail.com'
-            subject = 'This is a subject'
-            message = 'This is a message' 
+# Testando envio de emails via console, pois porta 587 provavelmente bloqueada
 
-            msg = MIMEMultipart()
-            msg['From'] = email
-            msg['To'] = send_to_email
-            msg['Subject'] = subject
-            msg.attach(MIMEText(message, 'plain'))
-
-            server = smtplib.SMTP('smtp.gmail.com', 587)
-            server.starttls()
-            server.login(email, password)
-            text = msg.as_string()
-            server.sendmail(email, send_to_email, text)
-            server.quit()
-'''
+def myaccount(request):
+    template_name = 'myaccount.html'
+    return render(request, template_name)
