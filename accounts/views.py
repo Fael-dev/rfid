@@ -41,9 +41,10 @@ def recover(request):
             new_senha = "".join(random.sample(dados, len(dados)))
             us.set_password(new_senha)
             us.save()
+            email = us.email
             #ENVIAR A SENHA PARA EMAIL E INFORMAR AO USUÁRIO 
-            msg = 'Sua nova senha é: '+new_senha
-            send_mail('Opção',msg, settings.EMAIL_HOST_USER, ['kewipo5641@net3mail.com',], fail_silently=False)
+            msg = 'Sua nova senha na Aironnet é: '+new_senha
+            send_mail('Recuperação de senha.',msg, settings.EMAIL_HOST_USER, [email,], fail_silently=False)
             messages.success(request, 'Foi enviada uma nova senha para seu email cadastrado.')
             return redirect('/accounts/login')
         else:
