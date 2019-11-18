@@ -1,6 +1,7 @@
 /* ========== TABELA DA LISTA DOS CÓDIGOS  ======== */
 .table{
 	margin-top: 0px;
+	margin-bottom: 50px;
 }
 .table tr td{
 	vertical-align: middle;
@@ -62,10 +63,16 @@
 /* ========== RODAPÉ ============= */
 
 .footer{
-	position: relative;
+	position: fixed;
+	left: 0px;
+	margin:0px;
+	width: 100%;
 	background-color: #343a40;
 	color: white;
 	bottom:0px;
+}
+.footer-copyright{
+	color: #343a40;
 }
 
 /* ============== FORMULÁRIO DE CADASTRO ============ */
@@ -99,7 +106,7 @@
 /* ================= PAGINAÇÃO ======================== */
 
 .pagination{
-	margin-bottom: 20px;
+	margin-bottom: 120px;
 
 }
 .step-links{
@@ -155,6 +162,8 @@ a:hover{
 /* button recolor */
 .jumbotron{
   text-align: center;
+  background-color:lightslategrey;
+  top:50px;
 }
 .logo_air{
 	width: 270px;

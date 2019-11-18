@@ -37,7 +37,7 @@ def recover(request):
         user = User.objects.filter(email=mail)
         if user:
             us = User.objects.get(email=mail)
-            dados = 'aeiou0123456789'
+            dados = 'aEiOu0123456789'
             new_senha = "".join(random.sample(dados, len(dados)))
             us.set_password(new_senha)
             us.save()

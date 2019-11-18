@@ -12,20 +12,11 @@ from django.template.loader import get_template
 from django.http import HttpResponse
 
 
-'''
-	FILTRO POR PERÍODO A FAZER, PEGANDO DATA EM FORMATO STRING E 
-	CONVERTENDO PARA DATETIME E FAZENDO O FILTRO, SEM ERROS, MAS...
-	NÃO RETORNA NADA.
-'''
-
-'''
-	Função HOMEPAGE recebe os dados enviados do servidore se já estivem cadastrados,
-	só pode registrar se tiver passado o tempo de 1 minuto, se não, ele é cadastrado.
-'''
 def homepage(request):
 
 	template_name = 'homepage.html'
-	
+	log = datetime.now()
+
 	if request.method == 'POST':
 		form = ObjForm(request.POST)
 		fml = form.save(commit=False)
@@ -78,7 +69,7 @@ def homepage(request):
 	else:
 		form = ObjForm()
 
-	return render(request, template_name)
+	return render(request, template_name, {'log':log})
 	
 
 @login_required
@@ -100,10 +91,14 @@ def listar(request):
 
 	elif filtro:
 		if filtro == 'sem':
-			obj = Objeto.objects.all().order_by('objeto')
-		
+			obj = Objeto.objects.filter(objeto='')
+		elif filtro == 'todos':
+			lista = Objeto.objects.all().order_by('-date')
+			paginator = Paginator(lista, 10)
+			page = request.GET.get('page')
+			obj = paginator.get_page(page)
 		else:
-			obj = Objeto.objects.all().order_by('-objeto')
+			obj = Objeto.objects.exclude(objeto='')
 
 	else:
 		lista = Objeto.objects.all().order_by('-date')
@@ -166,21 +161,11 @@ def historico(request, code):
 	
 	if not hist:
 		return render(request, '404.html')
-	# hist = get_list_or_404(Historico, code=code)
+	
 
 	template_name = 'historico.html'
 	return render(request, template_name, {'hist':hist, 'code':code, 'total':total })
 
-'''
-@login_required
-def gerar_pdf(request, code ,*args, **kwargs):
-	data_emissao = datetime.now()
-	user = request.user
-	hist = Historico.objects.filter(code=code)
-	data = {'hist': hist, 'user':user, 'data_emissao':data_emissao}
-	pdf = render_to_pdf('relatorio.html', data)
-	return HttpResponse(pdf, content_type='application/pdf')
-'''
 
 @login_required
 def gerar_pdf(request):
@@ -193,14 +178,6 @@ def gerar_pdf(request):
 
 	filtro_select = request.POST.get('selectcode')
 	option = request.POST.get('selectcampos')
-	periodo = request.POST.get('selectperiodo')
-	print(periodo)
-	'''
-	a = periodo.replace(",", "")
-	b = a.replace(".", "")
-	c = b.replace(" pm", "")
-	date = datetime.strptime(c, '%b %d %Y %I:%M')
-	'''
 
 	if filtro_select == 'todos':
 		codigo = filtro_select

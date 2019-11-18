@@ -6,11 +6,12 @@
   <h1 id="h1-center">Últimos Registros</h1>
   
    <div class="col-12 filter-div">
-      <span>Ordenar por:</span>
+      <span>Filtrar por:</span>
       <select name="filter" id="filter" class="form-control">  
         <option value="">Escolha uma opção</option>
         <option value="com">Códigos relacionados com objetos</option>
         <option value="sem">Códigos não relacionados</option>
+        <option value="todos">Todos os códigos</option>
       </select>
     <form class="form-inline">
         <input class="form-control mr-sm-2" type="search" placeholder="Pesquise por objetos" aria-label="Pesquisar" name="search" value="{{ request.GET.search }}">
