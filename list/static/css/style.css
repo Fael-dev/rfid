@@ -60,6 +60,14 @@
 	padding: 10px;
 }
 
+.icon_menu{
+	margin-top: -2px;
+	position: relative;
+	width: 20px;
+	height: auto;
+	vertical-align: middle;
+}
+
 /* ========== RODAPÉ ============= */
 
 .footer{
@@ -170,14 +178,6 @@ a:hover{
 	height: 60px;
 }
 
-
-/*================ PDF ===============*/
-
-.img-pdf{
-	width: 20px;
-	height: 20px;
-	vertical-align: middle;
-}
 
 /* ================== INFORMATIVOS SOBRE OS OBJ =============== */
 

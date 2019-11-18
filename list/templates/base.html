@@ -20,7 +20,7 @@
     <ul class="navbar-nav">
       {% if user.is_authenticated %}
       <li class="nav-item active">
-        <a class="nav-link" href="/lista">Ultimos registros</a>
+        <a class="nav-link" href="/lista">Ultimos registros <img src="{% static 'images/register_icon.png' %}" class="icon_menu"></a>
       </li>
       <!--
       <li class="nav-item active">
@@ -28,7 +28,7 @@
       </li>
       -->
       <li class="nav-item">
-        <a class="nav-link" href="/accounts/logout" onclick="return confirm('Deseja realmente sair ?')">Sair</a>
+        <a class="nav-link" href="/accounts/logout" onclick="return confirm('Deseja realmente sair ?')">Sair <img src="{% static 'images/logout_icon.png' %}" class='icon_menu' ></a>
       </li>
       {% else %}
   

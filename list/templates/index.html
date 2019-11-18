@@ -59,7 +59,7 @@
                               <option value="{{ obj.code }}">Apenas: {{ obj.code }}  -  
                                 {% if obj.objeto %}
                                   {{ obj.objeto }}
-                                  {% else %} <b>Object not found</b>{% endif %}
+                                {% else %} <b>Object not found</b>{% endif %}
                                 </option>
                             {% endfor %}
                           </select>
@@ -94,15 +94,15 @@
                    -->
               </div>
               <div class="modal-footer">
-                  <button type="button" class="badge badge-secundary" data-dismiss="modal"><img src="{% static 'images/excluir.png' %}" class="img-pdf">Fechar</button>
-                  <button type="submit" class="badge badge-info"> <img src="{% static 'images/print.png' %}" class="img-pdf">Gerar PDF</button>
+                  <button type="button" class="badge badge-secundary" data-dismiss="modal"><img src="{% static 'images/excluir.png' %}" class="icon_menu">Fechar</button>
+                  <button type="submit" class="badge badge-info"> <img src="{% static 'images/print.png' %}" class="icon_menu">Gerar PDF</button>
               </div>
           </div>
         </div>
       </div>
     </form>
   
-    <button type="button" class="badge badge-info" data-toggle="modal" data-target=".bd-example-modal-lg"><img src="{% static 'images/pdf.png' %}" class="img-pdf">Relatório</button>
+    <button type="button" class="badge badge-info" data-toggle="modal" data-target=".bd-example-modal-lg"><img src="{% static 'images/pdf.png' %}" class="icon_menu">Relatório</button>
     <span class="badge badge-dark"> <b> Com Objetos: {{ com }}</b></span>
     <span class="badge badge-dark"> <b> Total de Objetos: {{ total }}</b></span>
     <span class="badge badge-dark"> <b> Sem Objetos: {{ sem }}</b></span>
