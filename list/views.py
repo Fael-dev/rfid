@@ -12,6 +12,11 @@ from django.template.loader import get_template
 from django.http import HttpResponse
 
 
+
+'''
+	Função 'HOMEPAGE' recebe as informações enviadas pela antena e 
+	faz os tratamentos certos antes de salvar.
+'''
 def homepage(request):
 
 	template_name = 'homepage.html'
@@ -71,7 +76,10 @@ def homepage(request):
 
 	return render(request, template_name, {'log':log})
 	
-
+	
+'''
+	Função 'LISTAR' Lista os dados do banco na tela e também de pesquisas e filtros.
+'''
 @login_required
 def listar(request):
 	search = request.GET.get('search')
@@ -111,6 +119,10 @@ def listar(request):
 
 	return render(request, template_name, {'obj':obj, 'sem': sem, 'com': com, 'total':total, 'hist':hist})
 
+
+'''
+	Função 'DELETEOBJ' deleta os objetos e o histórico relacionado automaticamente.
+'''
 @login_required
 def deleteObj(request, id):
 	obj = get_object_or_404(Objeto, pk=id)
@@ -120,7 +132,11 @@ def deleteObj(request, id):
 	obj.delete()
 	messages.info(request, 'Registro ('+obj.code+') deletado com sucesso')
 	return redirect('/lista')
-	
+
+
+'''
+	Função 'DESVINCULAR' desvincula objeto relacionado ao código acidentalmente.
+'''
 @login_required
 def desvincular(request, id):
 	obj = Objeto.objects.filter(pk=id).first()
@@ -131,6 +147,10 @@ def desvincular(request, id):
 		return redirect('/lista')
 	return redirect('/lista')
 
+
+'''
+	Função 'ADD' Relaciona objetos a determinado código.
+'''
 @login_required
 def add(request, id):
 	objt = get_object_or_404(Objeto, pk=id) 
@@ -150,6 +170,10 @@ def add(request, id):
 	else:
 		return render(request, template_name, {'form': form})
 
+
+'''
+	Função 'HISTORICO' Lista todos os registros de um determinado código.
+'''
 @login_required
 def historico(request, code):
 	total = Historico.objects.filter(code=code).count()
@@ -167,6 +191,10 @@ def historico(request, code):
 	return render(request, template_name, {'hist':hist, 'code':code, 'total':total })
 
 
+
+'''
+	Função 'GERAR_PDF' Gera relatório em formato PDF a partir de uma filtragem realizada previamente.
+'''
 @login_required
 def gerar_pdf(request):
 	
