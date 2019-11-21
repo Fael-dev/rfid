@@ -7,3 +7,6 @@ devidamente tratados e encaminhados para um banco de dados do sistema e renderiz
 
 Repositório Github Private Rafael
 
+Alterar banco, de objetos, para pessoas.
+Adaptar sistema RFID de objetos para ponto de trabalho.
+Gerar PDF de acordo com planilha.
